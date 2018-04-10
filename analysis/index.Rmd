@@ -5,7 +5,10 @@ output:
     toc: false
 ---
 
-### CTCF chip-exo data
+### Chip-exo data
 
-* [CTCF chip-exo data from Pugh 2011 Cell](chipexo_CTCF_Pugh2011.html)
+* [CTCF Chip-exo data from Pugh 2011 Cell](chipexo_CTCF_Pugh2011.html)
 
+### Chip-seq data
+
+* [CTCF Chip-seq data from ENCODE](chipseq_CTCF_hela.html)
