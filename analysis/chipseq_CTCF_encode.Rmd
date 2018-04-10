@@ -27,8 +27,8 @@ package git2r is installed -->
 <!-- Add your analysis here -->
 
 ## Download BAM files from ENCODE, then get 5' end counts in bigwig format
-bam files are in `/project/mstephens/data_smoothing/chipseq/bam/`
-bw files are in `/project/mstephens/data_smoothing/chipseq/bw/`
+* bam files are in `/project/mstephens/data_smoothing/chipseq/bam/`
+* bw files are in `/project/mstephens/data_smoothing/chipseq/bw/`
 ```{bash eval=FALSE}
 
 mkdir /project/mstephens/data_smoothing/chipseq/log
@@ -36,10 +36,12 @@ cd /project/mstephens/data_smoothing/chipseq/log
 
 mkdir /project/mstephens/data_smoothing/chipseq/bw
 
+## CTCF HelaS3 Broad ChIP-seq
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
 
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
 
+## CTCF HelaS3 UTA ChIP-seq
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
 
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
@@ -52,6 +54,7 @@ sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bam
 cat /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed
 ```
 
+* read counts are in `/project/mstephens/data_smoothing/chipseq/examples/`
 ```{bash eval=FALSE}
 
 dir_examples=/project/mstephens/data_smoothing/chipseq/examples/
