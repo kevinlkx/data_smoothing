@@ -5,4 +5,7 @@ output:
     toc: false
 ---
 
-Welcome to my research website.
+### CTCF chip-exo data
+
+* [CTCF chip-exo data from Pugh 2011 Cell](chipexo_CTCF_Pugh2011.html)
+
