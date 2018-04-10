@@ -1,0 +1,163 @@
+---
+title: "ChIP-exo data from Frank Pugh Cell 2011 paper"
+author: "Kaixuan Luo"
+date: 2018-04-09
+output: html_document
+---
+
+<!-- The file analysis/chunks.R contains chunks that define default settings
+shared across the workflowr files. -->
+```{r read-chunk, include=FALSE, cache=FALSE}
+knitr::read_chunk("chunks.R")
+```
+
+<!-- Update knitr chunk options -->
+```{r knitr-opts-chunk, include=FALSE}
+```
+
+<!-- Insert the date the file was last updated -->
+```{r last-updated, echo=FALSE, results='asis'}
+```
+
+<!-- Insert the code version (Git commit SHA1) if Git repository exists and R
+package git2r is installed -->
+```{r code-version, echo=FALSE, results='asis'}
+```
+
+<!-- Add your analysis here -->
+## The following data download and alignment were obtained from `MACE` http://chipexo.sourceforge.net
+
+## raw sequence data
+```{bash eval=FALSE}
+
+Download CTCF ChIP-exo data (Accession number SRA044886) published in Cell, 2011.
+
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346401/SRR346401.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346402/SRR346402.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346403/SRR346403.fastq.gz
+```
+
+## sorted and indexed BAM files:
+```{bash eval=FALSE}
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate1.sorted.bam
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate1.sorted.bam.bai
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate2.sorted.bam
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate2.sorted.bam.bai
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate3.sorted.bam
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate3.sorted.bam.bai
+```
+
+## Download bigwig files directly from MACE:
+```{bash eval=FALSE}
+#Raw signals
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_raw_rep1_Forward.bw
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_raw_rep1_Reverse.bw
+
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_raw_rep2_Forward.bw
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_raw_rep2_Reverse.bw
+
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_raw_rep3_Forward.bw
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_raw_rep3_Reverse.bw
+
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_MACE_Forward.bw
+wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_MACE_Reverse.bw
+```
+
+
+## get 5' end counts as bigwig format
+count the 5' ends from the bam file to make sure the results agree with the downloaded bw counts
+```{bash eval=FALSE}
+mkdir /project/mstephens/data_smoothing/chipexo/log
+cd /project/mstephens/data_smoothing/chipexo/log
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate1.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep1
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate2.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep2
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate3.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep3
+
+```
+
+## Extract counts from bigwig files
+```{bash eval=FALSE}
+
+mkdir -p /project/mstephens/data_smoothing/chipexo/examples
+
+dir_examples=/project/mstephens/data_smoothing/chipexo/examples/
+dir_bw=/project/mstephens/data_smoothing/chipexo/bw
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_raw_rep1_Forward.bw ${dir_examples}/example_CTCF_raw_rep1_Forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_raw_rep1_Reverse.bw ${dir_examples}/example_CTCF_raw_rep1_Reverse_counts.txt
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_raw_rep2_Forward.bw ${dir_examples}/example_CTCF_raw_rep2_Forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_raw_rep2_Reverse.bw ${dir_examples}/example_CTCF_raw_rep2_Reverse_counts.txt
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_raw_rep3_Forward.bw ${dir_examples}/example_CTCF_raw_rep3_Forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_raw_rep3_Reverse.bw ${dir_examples}/example_CTCF_raw_rep3_Reverse_counts.txt
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_MACE_Forward.bw ${dir_examples}/example_CTCF_MACE_Forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_MACE_Reverse.bw ${dir_examples}/example_CTCF_MACE_Reverse_counts.txt
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep1_forward.bw ${dir_examples}/example_CTCF_rep1_forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep1_reverse.bw ${dir_examples}/example_CTCF_rep1_reverse_counts.txt
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep2_forward.bw ${dir_examples}/example_CTCF_rep2_forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep2_reverse.bw ${dir_examples}/example_CTCF_rep2_reverse_counts.txt
+
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep3_forward.bw ${dir_examples}/example_CTCF_rep3_forward_counts.txt
+bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep3_reverse.bw ${dir_examples}/example_CTCF_rep3_reverse_counts.txt
+
+```
+
+
+## read read counts
+```{r}
+
+extract_counts <- function(filename){
+  bed_counts <- read.table(filename, header = F, stringsAsFactors = F)
+  colnames(bed_counts) <- c("chr", "start", "end", "name", "width", "counts")
+  
+  counts <- strsplit(bed_counts$counts, split = ",")[[1]]
+  counts[counts == "NA"] <- 0
+  counts <- as.numeric(counts)
+
+  return(counts.l = list(chr = bed_counts$chr, start = bed_counts$start, end = bed_counts$end, counts = counts))
+}
+
+dir_examples <- "/project/mstephens/data_smoothing/chipexo/examples/"
+
+counts_rep1_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep1_Forward_counts.txt"))
+
+counts_rep2_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep2_Forward_counts.txt"))
+
+counts_rep3_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep3_Forward_counts.txt"))
+
+counts_rep1_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep1_Reverse_counts.txt"))
+
+counts_rep2_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep2_Reverse_counts.txt"))
+
+counts_rep3_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep3_Reverse_counts.txt"))
+
+title <- paste0(counts_rep1_forward.l$chr, ": ", counts_rep1_forward.l$start, "-",counts_rep1_forward.l$end)
+```
+
+## plot read counts
+```{r, fig.height=10, fig.width=10}
+
+par(mfcol = c(6,1))
+par(mar = c(2,2,2,1))
+par(bty="n")
+plot(counts_rep1_forward.l$counts, main = title, type = "h", col = "blue", ylab = "rep1 forward", xlab = "", ylim = c(0,20))
+plot(counts_rep2_forward.l$counts, type = "h", col = "blue", ylab = "rep2 forward", xlab = "", ylim = c(0,20))
+plot(counts_rep3_forward.l$counts, type = "h", col = "blue", ylab = "rep3 forward", xlab = "", ylim = c(0,20))
+plot(counts_rep1_reverse.l$counts, main = title, type = "h", col = "red", ylab = "rep1 reverse", xlab = "", ylim = c(0,20))
+plot(counts_rep2_reverse.l$counts, type = "h", col = "red", ylab = "rep2 reverse", xlab = "", ylim = c(0,20))
+plot(counts_rep3_reverse.l$counts, type = "h", col = "red", ylab = "rep3 reverse", xlab = "", ylim = c(0,20))
+
+```
+
+## Session information
+
+<!-- Insert the session information into the document -->
+```{r session-info}
+```
