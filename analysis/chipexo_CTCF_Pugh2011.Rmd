@@ -25,19 +25,17 @@ package git2r is installed -->
 ```
 
 <!-- Add your analysis here -->
-## The following data download and alignment were obtained from `MACE` http://chipexo.sourceforge.net
+## The following data download and alignment were obtained from [MACE](http://chipexo.sourceforge.net)
 
 ## raw sequence data
-```{bash eval=FALSE}
-
 Download CTCF ChIP-exo data (Accession number SRA044886) published in Cell, 2011.
-
+```{bash eval=FALSE}
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346401/SRR346401.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346402/SRR346402.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346403/SRR346403.fastq.gz
 ```
 
-## sorted and indexed BAM files:
+## Download sorted and indexed BAM files directly from MACE:
 ```{bash eval=FALSE}
 wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate1.sorted.bam
 wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate1.sorted.bam.bai
@@ -138,11 +136,12 @@ counts_rep2_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_ra
 
 counts_rep3_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_raw_rep3_Reverse_counts.txt"))
 
-title <- paste0(counts_rep1_forward.l$chr, ": ", counts_rep1_forward.l$start, "-",counts_rep1_forward.l$end)
 ```
 
 ## plot read counts
 ```{r, fig.height=10, fig.width=10}
+
+title <- paste0(counts_rep1_forward.l$chr, ": ", counts_rep1_forward.l$start, "-",counts_rep1_forward.l$end)
 
 par(mfcol = c(6,1))
 par(mar = c(2,2,2,1))
