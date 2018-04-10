@@ -1,0 +1,151 @@
+---
+title: "ChIP-seq data from ENCODE"
+author: "Kaixuan Luo"
+date: 2018-04-09
+output: html_document
+---
+
+<!-- The file analysis/chunks.R contains chunks that define default settings
+shared across the workflowr files. -->
+```{r read-chunk, include=FALSE, cache=FALSE}
+knitr::read_chunk("chunks.R")
+```
+
+<!-- Update knitr chunk options -->
+```{r knitr-opts-chunk, include=FALSE}
+```
+
+<!-- Insert the date the file was last updated -->
+```{r last-updated, echo=FALSE, results='asis'}
+```
+
+<!-- Insert the code version (Git commit SHA1) if Git repository exists and R
+package git2r is installed -->
+```{r code-version, echo=FALSE, results='asis'}
+```
+
+<!-- Add your analysis here -->
+
+## Download BAM files from ENCODE, then get 5' end counts in bigwig format
+bam files are in `/project/mstephens/data_smoothing/chipseq/bam/`
+bw files are in `/project/mstephens/data_smoothing/chipseq/bw/`
+```{bash eval=FALSE}
+
+mkdir /project/mstephens/data_smoothing/chipseq/log
+cd /project/mstephens/data_smoothing/chipseq/log
+
+mkdir /project/mstephens/data_smoothing/chipseq/bw
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
+
+sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
+
+```
+
+
+## Extract counts from bigwig files
+```{bash}
+cat /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed
+```
+
+```{bash eval=FALSE}
+
+dir_examples=/project/mstephens/data_smoothing/chipseq/examples/
+mkdir -p ${dir_examples}
+
+dir_bw=/project/mstephens/data_smoothing/chipseq/bw
+
+## CTCF HelaS3 Broad ChIP-seq
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1_forward.bw ${dir_examples}/example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep1_forward_counts.txt
+
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1_reverse.bw ${dir_examples}/example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep1_reverse_counts.txt
+
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2_forward.bw ${dir_examples}/example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep2_forward_counts.txt
+
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2_reverse.bw ${dir_examples}/example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep2_reverse_counts.txt
+
+## CTCF HelaS3 UTA ChIP-seq
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeOpenChromChipHelas3CtcfAlnRep1_forward.bw ${dir_examples}/example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep1_forward_counts.txt
+
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeOpenChromChipHelas3CtcfAlnRep1_reverse.bw ${dir_examples}/example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep1_reverse_counts.txt
+
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeOpenChromChipHelas3CtcfAlnRep2_forward.bw ${dir_examples}/example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep2_forward_counts.txt
+
+bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeOpenChromChipHelas3CtcfAlnRep2_reverse.bw ${dir_examples}/example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep2_reverse_counts.txt
+
+```
+
+## read read counts
+```{r}
+
+extract_counts <- function(filename){
+  bed_counts <- read.table(filename, header = F, stringsAsFactors = F)
+  colnames(bed_counts) <- c("chr", "start", "end", "name", "width", "counts")
+  
+  counts <- strsplit(bed_counts$counts, split = ",")[[1]]
+  counts[counts == "NA"] <- 0
+  counts <- as.numeric(counts)
+
+  return(counts.l = list(chr = bed_counts$chr, start = bed_counts$start, end = bed_counts$end, counts = counts))
+}
+
+dir_examples <- "/project/mstephens/data_smoothing/chipseq/examples/"
+
+## Broad
+counts_broad_rep1_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep1_forward_counts.txt"))
+
+counts_broad_rep2_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep2_forward_counts.txt"))
+
+counts_broad_rep1_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep1_reverse_counts.txt"))
+
+counts_broad_rep2_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeBroadHistoneHelas3CtcfStdAlnRep2_reverse_counts.txt"))
+
+## UTA
+counts_UTA_rep1_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep1_forward_counts.txt"))
+
+counts_UTA_rep2_forward.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep2_forward_counts.txt"))
+
+counts_UTA_rep1_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep1_reverse_counts.txt"))
+
+counts_UTA_rep2_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep1_reverse_counts.txt"))
+```
+
+## plot CTCF Hela ChIP-seq read counts (Broad)
+```{r, fig.height=10, fig.width=10}
+
+title <- paste0(counts_broad_rep1_forward.l$chr, ": ", counts_broad_rep1_forward.l$start, "-",counts_broad_rep1_forward.l$end)
+
+par(mfcol = c(4,1))
+par(mar = c(2,2,2,1))
+par(bty="n")
+plot(counts_broad_rep1_forward.l$counts, main = title, type = "h", col = "blue", ylab = "rep1 forward", xlab = "", ylim = c(0,20))
+plot(counts_broad_rep2_forward.l$counts, type = "h", col = "blue", ylab = "rep2 forward", xlab = "", ylim = c(0,20))
+plot(counts_broad_rep1_reverse.l$counts, main = title, type = "h", col = "red", ylab = "rep1 reverse", xlab = "", ylim = c(0,20))
+plot(counts_broad_rep2_reverse.l$counts, type = "h", col = "red", ylab = "rep2 reverse", xlab = "", ylim = c(0,20))
+
+```
+
+
+## plot CTCF Hela ChIP-seq read counts (UT-A)
+```{r, fig.height=10, fig.width=10}
+
+title <- paste0(counts_UTA_rep1_forward.l$chr, ": ", counts_UTA_rep1_forward.l$start, "-",counts_UTA_rep1_forward.l$end)
+
+par(mfcol = c(4,1))
+par(mar = c(2,2,2,1))
+par(bty="n")
+plot(counts_UTA_rep1_forward.l$counts, main = title, type = "h", col = "blue", ylab = "rep1 forward", xlab = "", ylim = c(0,20))
+plot(counts_UTA_rep2_forward.l$counts, type = "h", col = "blue", ylab = "rep2 forward", xlab = "", ylim = c(0,20))
+plot(counts_UTA_rep1_reverse.l$counts, main = title, type = "h", col = "red", ylab = "rep1 reverse", xlab = "", ylim = c(0,20))
+plot(counts_UTA_rep2_reverse.l$counts, type = "h", col = "red", ylab = "rep2 reverse", xlab = "", ylim = c(0,20))
+
+```
+## Session information
+
+<!-- Insert the session information into the document -->
+```{r session-info}
+```
