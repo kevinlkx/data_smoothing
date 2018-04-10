@@ -11,4 +11,4 @@ output:
 
 ### Chip-seq data
 
-* [CTCF Chip-seq data from ENCODE](chipseq_CTCF_hela.html)
+* [CTCF Chip-seq data from ENCODE](chipseq_CTCF_encode.html)
