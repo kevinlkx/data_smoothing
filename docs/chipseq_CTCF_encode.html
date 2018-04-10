@@ -324,21 +324,26 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> a794835</p>
+<p><strong>Code version:</strong> c4247fc</p>
 <!-- Add your analysis here -->
 <div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
 <h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
-<p>bam files are in <code>/project/mstephens/data_smoothing/chipseq/bam/</code> bw files are in <code>/project/mstephens/data_smoothing/chipseq/bw/</code></p>
+<ul>
+<li>bam files are in <code>/project/mstephens/data_smoothing/chipseq/bam/</code></li>
+<li>bw files are in <code>/project/mstephens/data_smoothing/chipseq/bw/</code></li>
+</ul>
 <pre class="bash"><code>
 mkdir /project/mstephens/data_smoothing/chipseq/log
 cd /project/mstephens/data_smoothing/chipseq/log
 
 mkdir /project/mstephens/data_smoothing/chipseq/bw
 
+## CTCF HelaS3 Broad ChIP-seq
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
 
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
 
+## CTCF HelaS3 UTA ChIP-seq
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
 
 sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
@@ -348,6 +353,9 @@ sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bam
 <h2>Extract counts from bigwig files</h2>
 <pre class="bash"><code>cat /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed</code></pre>
 <pre><code>chr1    110074895   110075320   CTCF_site</code></pre>
+<ul>
+<li>read counts are in <code>/project/mstephens/data_smoothing/chipseq/examples/</code></li>
+</ul>
 <pre class="bash"><code>
 dir_examples=/project/mstephens/data_smoothing/chipseq/examples/
 mkdir -p ${dir_examples}
