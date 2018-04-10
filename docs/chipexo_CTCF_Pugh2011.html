@@ -324,22 +324,20 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> e7d5254</p>
+<p><strong>Code version:</strong> b478aeb</p>
 <!-- Add your analysis here -->
-<div id="the-following-data-download-and-alignment-were-obtained-from-mace-httpchipexo.sourceforge.net" class="section level2">
-<h2>The following data download and alignment were obtained from <code>MACE</code> <a href="http://chipexo.sourceforge.net" class="uri">http://chipexo.sourceforge.net</a></h2>
+<div id="the-following-data-download-and-alignment-were-obtained-from-mace" class="section level2">
+<h2>The following data download and alignment were obtained from <a href="http://chipexo.sourceforge.net">MACE</a></h2>
 </div>
 <div id="raw-sequence-data" class="section level2">
 <h2>raw sequence data</h2>
-<pre class="bash"><code>
-Download CTCF ChIP-exo data (Accession number SRA044886) published in Cell, 2011.
-
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346401/SRR346401.fastq.gz
+<p>Download CTCF ChIP-exo data (Accession number SRA044886) published in Cell, 2011.</p>
+<pre class="bash"><code>wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346401/SRR346401.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346402/SRR346402.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR346/SRR346403/SRR346403.fastq.gz</code></pre>
 </div>
-<div id="sorted-and-indexed-bam-files" class="section level2">
-<h2>sorted and indexed BAM files:</h2>
+<div id="download-sorted-and-indexed-bam-files-directly-from-mace" class="section level2">
+<h2>Download sorted and indexed BAM files directly from MACE:</h2>
 <pre class="bash"><code>wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate1.sorted.bam
 wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate1.sorted.bam.bai
 wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bam/CTCF_replicate2.sorted.bam
@@ -430,13 +428,13 @@ counts_rep1_reverse.l &lt;- extract_counts(file.path(dir_examples, &quot;example
 
 counts_rep2_reverse.l &lt;- extract_counts(file.path(dir_examples, &quot;example_CTCF_raw_rep2_Reverse_counts.txt&quot;))
 
-counts_rep3_reverse.l &lt;- extract_counts(file.path(dir_examples, &quot;example_CTCF_raw_rep3_Reverse_counts.txt&quot;))
-
-title &lt;- paste0(counts_rep1_forward.l$chr, &quot;: &quot;, counts_rep1_forward.l$start, &quot;-&quot;,counts_rep1_forward.l$end)</code></pre>
+counts_rep3_reverse.l &lt;- extract_counts(file.path(dir_examples, &quot;example_CTCF_raw_rep3_Reverse_counts.txt&quot;))</code></pre>
 </div>
 <div id="plot-read-counts" class="section level2">
 <h2>plot read counts</h2>
-<pre class="r"><code>par(mfcol = c(6,1))
+<pre class="r"><code>title &lt;- paste0(counts_rep1_forward.l$chr, &quot;: &quot;, counts_rep1_forward.l$start, &quot;-&quot;,counts_rep1_forward.l$end)
+
+par(mfcol = c(6,1))
 par(mar = c(2,2,2,1))
 par(bty=&quot;n&quot;)
 plot(counts_rep1_forward.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep1 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
