@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> aff78b8</p>
+<p><strong>Code version:</strong> 36223d5</p>
 <!-- Add your analysis here -->
 <div id="the-following-data-download-and-alignment-were-obtained-from-mace" class="section level2">
 <h2>The following data download and alignment were obtained from <a href="http://chipexo.sourceforge.net">MACE</a></h2>
@@ -406,8 +406,8 @@ bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep3_for
 bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep3_reverse.bw ${dir_examples}/example_CTCF_rep3_reverse_counts.txt
 </code></pre>
 </div>
-<div id="read-read-counts" class="section level2">
-<h2>read read counts</h2>
+<div id="get-read-counts" class="section level2">
+<h2>get read counts</h2>
 <pre class="r"><code>extract_counts &lt;- function(filename){
   bed_counts &lt;- read.table(filename, header = F, stringsAsFactors = F)
   colnames(bed_counts) &lt;- c(&quot;chr&quot;, &quot;start&quot;, &quot;end&quot;, &quot;name&quot;, &quot;width&quot;, &quot;counts&quot;)
