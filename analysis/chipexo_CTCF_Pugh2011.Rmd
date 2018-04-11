@@ -68,11 +68,11 @@ count the 5' ends from the bam file to make sure the results agree with the down
 mkdir /project/mstephens/data_smoothing/chipexo/log
 cd /project/mstephens/data_smoothing/chipexo/log
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate1.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep1
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate1.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep1
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate2.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep2
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate2.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep2
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate3.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep3
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate3.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep3
 
 ```
 
@@ -140,7 +140,7 @@ counts_rep3_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_ra
 ```
 
 ## plot read counts
-```{r, fig.height=10, fig.width=10}
+```{r, fig.height=8, fig.width=10}
 
 title <- paste0(counts_rep1_forward.l$chr, ": ", counts_rep1_forward.l$start, "-",counts_rep1_forward.l$end)
 
