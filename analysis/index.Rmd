@@ -7,10 +7,10 @@ output:
 
 ### Chip-exo data
 
-* [CTCF Chip-exo data from Pugh 2011 Cell](chipexo_CTCF_Pugh2011.html)
+* [CTCF Chip-exo data from Pugh 2011 Cell, extract MACE example region](chipexo_CTCF_Pugh2011.html)
 
 ### Chip-seq data
 
-* [CTCF Chip-seq data from ENCODE](chipseq_CTCF_encode.html)
+* [CTCF Chip-seq data from ENCODE, extract MACE example region](chipseq_CTCF_encode.html)
 
-* [Histone and TF Chip-seq data from ENCODE](chipseq_histone_TF_encode.html)
+* [Histone and TF Chip-seq data from ENCODE, extract chr5 example region](chipseq_histone_TF_encode.html)
