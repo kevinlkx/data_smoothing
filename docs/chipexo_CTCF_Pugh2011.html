@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> f620a03</p>
+<p><strong>Code version:</strong> 7b6df27</p>
 <!-- Add your analysis here -->
 <div id="the-following-data-download-and-alignment-were-obtained-from-mace" class="section level2">
 <h2>The following data download and alignment were obtained from <a href="http://chipexo.sourceforge.net">MACE</a></h2>
@@ -366,11 +366,11 @@ wget http://dldcc-web.brc.bcm.edu/lilab/MACE/bigfile/CTCF_MACE_Reverse.bw</code>
 <pre class="bash"><code>mkdir /project/mstephens/data_smoothing/chipexo/log
 cd /project/mstephens/data_smoothing/chipexo/log
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate1.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep1
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate1.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep1
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate2.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep2
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate2.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep2
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate3.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep3
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipexo/bam/CTCF_replicate3.sorted.bam /project/mstephens/data_smoothing/chipexo/bw/CTCF_rep3
 </code></pre>
 </div>
 <div id="extract-counts-from-bigwig-files" class="section level2">
