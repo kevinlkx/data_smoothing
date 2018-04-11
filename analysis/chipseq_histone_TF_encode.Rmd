@@ -1,0 +1,157 @@
+---
+title: "Histone and TF ChIP-seq data from ENCODE"
+author: "Kaixuan Luo"
+date: 2018-04-09
+output: html_document
+---
+
+<!-- The file analysis/chunks.R contains chunks that define default settings
+shared across the workflowr files. -->
+```{r read-chunk, include=FALSE, cache=FALSE}
+knitr::read_chunk("chunks.R")
+```
+
+<!-- Update knitr chunk options -->
+```{r knitr-opts-chunk, include=FALSE}
+```
+
+<!-- Insert the date the file was last updated -->
+```{r last-updated, echo=FALSE, results='asis'}
+```
+
+<!-- Insert the code version (Git commit SHA1) if Git repository exists and R
+package git2r is installed -->
+```{r code-version, echo=FALSE, results='asis'}
+```
+
+<!-- Add your analysis here -->
+
+## Download BAM files from ENCODE, then get 5' end counts in bigwig format
+* bam files are in `/project/mstephens/data_smoothing/chipseq/bam/`
+* bw files are in `/project/mstephens/data_smoothing/chipseq/bw/`
+
+```{bash}
+cat /project/mstephens/data_smoothing/chipseq/bam_filelist.txt
+```
+
+```{bash eval=FALSE}
+mkdir -p /project/mstephens/data_smoothing/chipseq/bw
+
+mkdir -p /project/mstephens/data_smoothing/chipseq/log
+cd /project/mstephens/data_smoothing/chipseq/log
+
+while IFS=$'\t' read -r -a myArray
+do
+echo "${myArray[0]}"
+filename=${myArray[1]}
+echo $filename
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig_bothstrand.sbatch \ /project/mstephens/data_smoothing/chipseq/bam/${filename}.bam /project/mstephens/data_smoothing/chipseq/bw/${filename}
+done < /project/mstephens/data_smoothing/chipseq/bam_filelist.txt
+```
+
+## Extract counts from bigwig files
+```{bash}
+cat /project/mstephens/data_smoothing/regions/example_region1.bed
+```
+
+* read counts are in `/project/mstephens/data_smoothing/chipseq/examples/`
+```{bash eval=FALSE}
+
+dir_examples=/project/mstephens/data_smoothing/chipseq/examples/
+mkdir -p ${dir_examples}
+
+dir_bw=/project/mstephens/data_smoothing/chipseq/bw/
+
+bed_region=/project/mstephens/data_smoothing/regions/example_region1.bed
+
+while IFS=$'\t' read -r -a myArray
+do
+echo "${myArray[0]}"
+filename=${myArray[1]}
+echo $filename
+bwtool extract bed ${bed_region} ${dir_bw}/${filename}.bw ${dir_examples}/example_region1_${filename}_counts.txt
+done < /project/mstephens/data_smoothing/chipseq/bam_filelist.txt
+
+```
+
+## read read counts
+```{r}
+
+extract_counts <- function(filename_list){
+  
+  counts_total <- 0
+  for(filename in filename_list){
+    bed_counts <- read.table(filename, header = F, stringsAsFactors = F)
+    colnames(bed_counts) <- c("chr", "start", "end", "width", "counts")
+    
+    counts <- strsplit(bed_counts$counts, split = ",")[[1]]
+    counts[counts == "NA"] <- 0
+    counts <- as.numeric(counts)
+    counts_total <- counts_total + counts
+  }
+  
+  return(counts.l = list(chr = bed_counts$chr, start = bed_counts$start, end = bed_counts$end, counts = counts))
+}
+
+dir_examples <- "/project/mstephens/data_smoothing/chipseq/examples/"
+
+counts_H3k4me1.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k4me1UcdAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+counts_H3k4me3.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k4me3bUcdAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+counts_H3K9ac.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k9acbUcdAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+counts_H3K27me3.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k27me3bUcdAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+counts_CTCF.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhTfbsK562CtcfbIggrabAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+counts_GATA1.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhTfbsK562Gata1bIggmusAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+counts_P300.l <- extract_counts(file.path(dir_examples, 
+                                             paste0("example_region1_wgEncodeSydhTfbsK562P300IggrabAln", 
+                                                    c("Rep1", "Rep2"), 
+                                                    "_counts.txt")))
+
+```
+
+## plot ChIP-seq read counts
+```{r, fig.height=10, fig.width=10}
+
+title <- paste0(counts_H3k4me1.l$chr, ": ", counts_H3k4me1.l$start, "-",counts_H3k4me1.l$end)
+
+par(mfcol = c(7,1))
+par(mar = c(2,4,2,1))
+par(bty="n")
+plot(counts_H3k4me1.l$counts, main = title, type = "h", col = "blue", ylab = "H3K4me1", xlab = "")
+plot(counts_H3k4me3.l$counts, type = "h", col = "blue", ylab = "H3K4me3", xlab = "")
+plot(counts_H3K9ac.l$counts, type = "h", col = "blue", ylab = "H3K9ac", xlab = "")
+plot(counts_H3K27me3.l$counts, type = "h", col = "blue", ylab = "H3K27me3", xlab = "")
+plot(counts_CTCF.l$counts, type = "h", col = "blue", ylab = "CTCF", xlab = "")
+plot(counts_GATA1.l$counts, type = "h", col = "blue", ylab = "GATA1", xlab = "")
+plot(counts_P300.l$counts, type = "h", col = "blue", ylab = "P300", xlab = "")
+
+```
+
+## Session information
+
+<!-- Insert the session information into the document -->
+```{r session-info}
+```
