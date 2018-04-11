@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> 9c027eb</p>
+<p><strong>Code version:</strong> 9ce7caf</p>
 <!-- Add your analysis here -->
 <div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
 <h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
@@ -407,39 +407,25 @@ done &lt; /project/mstephens/data_smoothing/chipseq/bam_filelist.txt
 dir_examples &lt;- &quot;/project/mstephens/data_smoothing/chipseq/examples/&quot;
 
 counts_H3k4me1.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k4me1UcdAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k4me1UcdAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))
 
 counts_H3k4me3.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k4me3bUcdAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k4me3bUcdAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))
 
 counts_H3K9ac.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k9acbUcdAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k9acbUcdAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))
 
 counts_H3K27me3.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k27me3bUcdAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k27me3bUcdAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))
 
 counts_CTCF.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562CtcfbIggrabAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))
+                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562CtcfbIggrabAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))
 
 counts_GATA1.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562Gata1bIggmusAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))
+                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562Gata1bIggmusAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))
 
 counts_P300.l &lt;- extract_counts(file.path(dir_examples, 
-                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562P300IggrabAln&quot;, 
-                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
-                                                    &quot;_counts.txt&quot;)))</code></pre>
+                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562P300IggrabAln&quot;, c(&quot;Rep1&quot;, &quot;Rep2&quot;), &quot;_counts.txt&quot;)))</code></pre>
 </div>
 <div id="plot-chip-seq-read-counts" class="section level2">
 <h2>plot ChIP-seq read counts</h2>
