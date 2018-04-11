@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Kaixuan Luo" />
+
+<meta name="date" content="2018-04-09" />
+
+<title>Histone and TF ChIP-seq data from ENCODE</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">data smoothing</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Histone and TF ChIP-seq data from ENCODE</h1>
+<h4 class="author"><em>Kaixuan Luo</em></h4>
+<h4 class="date"><em>2018-04-09</em></h4>
+
+</div>
+
+
+<!-- The file analysis/chunks.R contains chunks that define default settings
+shared across the workflowr files. -->
+<!-- Update knitr chunk options -->
+<!-- Insert the date the file was last updated -->
+<p><strong>Last updated:</strong> 2018-04-10</p>
+<!-- Insert the code version (Git commit SHA1) if Git repository exists and R
+package git2r is installed -->
+<p><strong>Code version:</strong> 9c027eb</p>
+<!-- Add your analysis here -->
+<div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
+<h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
+<ul>
+<li>bam files are in <code>/project/mstephens/data_smoothing/chipseq/bam/</code></li>
+<li>bw files are in <code>/project/mstephens/data_smoothing/chipseq/bw/</code></li>
+</ul>
+<pre class="bash"><code>cat /project/mstephens/data_smoothing/chipseq/bam_filelist.txt</code></pre>
+<pre><code>H3k4me1_rep1    wgEncodeSydhHistoneK562H3k4me1UcdAlnRep1
+H3k4me1_rep2    wgEncodeSydhHistoneK562H3k4me1UcdAlnRep2
+H3k4me3_rep1    wgEncodeSydhHistoneK562H3k4me3bUcdAlnRep1
+H3k4me3_rep2    wgEncodeSydhHistoneK562H3k4me3bUcdAlnRep2
+H3k9ac_rep1 wgEncodeSydhHistoneK562H3k9acbUcdAlnRep1
+H3k9ac_rep2 wgEncodeSydhHistoneK562H3k9acbUcdAlnRep2
+H3k27me3_rep1   wgEncodeSydhHistoneK562H3k27me3bUcdAlnRep1
+H3k27me3_rep2   wgEncodeSydhHistoneK562H3k27me3bUcdAlnRep2
+H3k27me3_rep1   wgEncodeSydhHistoneK562H3k27me3bUcdAlnRep1
+H3k27me3_rep2   wgEncodeSydhHistoneK562H3k27me3bUcdAlnRep2
+CTCF_rep1   wgEncodeSydhTfbsK562CtcfbIggrabAlnRep1
+CTCF_rep2   wgEncodeSydhTfbsK562CtcfbIggrabAlnRep2
+GATA1_rep1  wgEncodeSydhTfbsK562Gata1bIggmusAlnRep1
+GATA1_rep2  wgEncodeSydhTfbsK562Gata1bIggmusAlnRep2
+P300_rep1   wgEncodeSydhTfbsK562P300IggrabAlnRep1
+P300_rep2   wgEncodeSydhTfbsK562P300IggrabAlnRep2</code></pre>
+<pre class="bash"><code>mkdir -p /project/mstephens/data_smoothing/chipseq/bw
+
+mkdir -p /project/mstephens/data_smoothing/chipseq/log
+cd /project/mstephens/data_smoothing/chipseq/log
+
+while IFS=$&#39;\t&#39; read -r -a myArray
+do
+echo &quot;${myArray[0]}&quot;
+filename=${myArray[1]}
+echo $filename
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig_bothstrand.sbatch \ /project/mstephens/data_smoothing/chipseq/bam/${filename}.bam /project/mstephens/data_smoothing/chipseq/bw/${filename}
+done &lt; /project/mstephens/data_smoothing/chipseq/bam_filelist.txt</code></pre>
+</div>
+<div id="extract-counts-from-bigwig-files" class="section level2">
+<h2>Extract counts from bigwig files</h2>
+<pre class="bash"><code>cat /project/mstephens/data_smoothing/regions/example_region1.bed</code></pre>
+<pre><code>chr5    180650000   180700000</code></pre>
+<ul>
+<li>read counts are in <code>/project/mstephens/data_smoothing/chipseq/examples/</code></li>
+</ul>
+<pre class="bash"><code>
+dir_examples=/project/mstephens/data_smoothing/chipseq/examples/
+mkdir -p ${dir_examples}
+
+dir_bw=/project/mstephens/data_smoothing/chipseq/bw/
+
+bed_region=/project/mstephens/data_smoothing/regions/example_region1.bed
+
+while IFS=$&#39;\t&#39; read -r -a myArray
+do
+echo &quot;${myArray[0]}&quot;
+filename=${myArray[1]}
+echo $filename
+bwtool extract bed ${bed_region} ${dir_bw}/${filename}.bw ${dir_examples}/example_region1_${filename}_counts.txt
+done &lt; /project/mstephens/data_smoothing/chipseq/bam_filelist.txt
+</code></pre>
+</div>
+<div id="read-read-counts" class="section level2">
+<h2>read read counts</h2>
+<pre class="r"><code>extract_counts &lt;- function(filename_list){
+  
+  counts_total &lt;- 0
+  for(filename in filename_list){
+    bed_counts &lt;- read.table(filename, header = F, stringsAsFactors = F)
+    colnames(bed_counts) &lt;- c(&quot;chr&quot;, &quot;start&quot;, &quot;end&quot;, &quot;width&quot;, &quot;counts&quot;)
+    
+    counts &lt;- strsplit(bed_counts$counts, split = &quot;,&quot;)[[1]]
+    counts[counts == &quot;NA&quot;] &lt;- 0
+    counts &lt;- as.numeric(counts)
+    counts_total &lt;- counts_total + counts
+  }
+  
+  return(counts.l = list(chr = bed_counts$chr, start = bed_counts$start, end = bed_counts$end, counts = counts))
+}
+
+dir_examples &lt;- &quot;/project/mstephens/data_smoothing/chipseq/examples/&quot;
+
+counts_H3k4me1.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k4me1UcdAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))
+
+counts_H3k4me3.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k4me3bUcdAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))
+
+counts_H3K9ac.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k9acbUcdAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))
+
+counts_H3K27me3.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhHistoneK562H3k27me3bUcdAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))
+
+counts_CTCF.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562CtcfbIggrabAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))
+
+counts_GATA1.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562Gata1bIggmusAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))
+
+counts_P300.l &lt;- extract_counts(file.path(dir_examples, 
+                                             paste0(&quot;example_region1_wgEncodeSydhTfbsK562P300IggrabAln&quot;, 
+                                                    c(&quot;Rep1&quot;, &quot;Rep2&quot;), 
+                                                    &quot;_counts.txt&quot;)))</code></pre>
+</div>
+<div id="plot-chip-seq-read-counts" class="section level2">
+<h2>plot ChIP-seq read counts</h2>
+<pre class="r"><code>title &lt;- paste0(counts_H3k4me1.l$chr, &quot;: &quot;, counts_H3k4me1.l$start, &quot;-&quot;,counts_H3k4me1.l$end)
+
+par(mfcol = c(7,1))
+par(mar = c(2,4,2,1))
+par(bty=&quot;n&quot;)
+plot(counts_H3k4me1.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;H3K4me1&quot;, xlab = &quot;&quot;)
+plot(counts_H3k4me3.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;H3K4me3&quot;, xlab = &quot;&quot;)
+plot(counts_H3K9ac.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;H3K9ac&quot;, xlab = &quot;&quot;)
+plot(counts_H3K27me3.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;H3K27me3&quot;, xlab = &quot;&quot;)
+plot(counts_CTCF.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;CTCF&quot;, xlab = &quot;&quot;)
+plot(counts_GATA1.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;GATA1&quot;, xlab = &quot;&quot;)
+plot(counts_P300.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;P300&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/chipseq_histone_TF_encode.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<!-- Insert the session information into the document -->
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.4.1 (2017-06-30)
+Platform: x86_64-redhat-linux-gnu (64-bit)
+Running under: Scientific Linux 7.2 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /usr/lib64/R/lib/libRblas.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.4.1  backports_1.1.2 magrittr_1.5    rprojroot_1.3-2
+ [5] tools_3.4.1     htmltools_0.3.6 yaml_2.1.16     Rcpp_0.12.14   
+ [9] stringi_1.1.6   rmarkdown_1.8   knitr_1.19      git2r_0.21.0   
+[13] stringr_1.2.0   digest_0.6.15   evaluate_0.10.1</code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+    This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
+</p>
+<hr>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
