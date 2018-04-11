@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> 9ce7caf</p>
+<p><strong>Code version:</strong> 3bdfa4d</p>
 <!-- Add your analysis here -->
 <div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
 <h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
@@ -386,8 +386,8 @@ bwtool extract bed ${bed_region} ${dir_bw}/${filename}.bw ${dir_examples}/exampl
 done &lt; /project/mstephens/data_smoothing/chipseq/bam_filelist.txt
 </code></pre>
 </div>
-<div id="read-read-counts" class="section level2">
-<h2>read read counts</h2>
+<div id="get-read-counts" class="section level2">
+<h2>get read counts</h2>
 <pre class="r"><code>extract_counts &lt;- function(filename_list){
   
   counts_total &lt;- 0
