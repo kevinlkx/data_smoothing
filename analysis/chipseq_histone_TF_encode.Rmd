@@ -96,39 +96,25 @@ extract_counts <- function(filename_list){
 dir_examples <- "/project/mstephens/data_smoothing/chipseq/examples/"
 
 counts_H3k4me1.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k4me1UcdAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k4me1UcdAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 counts_H3k4me3.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k4me3bUcdAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k4me3bUcdAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 counts_H3K9ac.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k9acbUcdAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k9acbUcdAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 counts_H3K27me3.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k27me3bUcdAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhHistoneK562H3k27me3bUcdAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 counts_CTCF.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhTfbsK562CtcfbIggrabAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhTfbsK562CtcfbIggrabAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 counts_GATA1.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhTfbsK562Gata1bIggmusAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhTfbsK562Gata1bIggmusAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 counts_P300.l <- extract_counts(file.path(dir_examples, 
-                                             paste0("example_region1_wgEncodeSydhTfbsK562P300IggrabAln", 
-                                                    c("Rep1", "Rep2"), 
-                                                    "_counts.txt")))
+                                             paste0("example_region1_wgEncodeSydhTfbsK562P300IggrabAln", c("Rep1", "Rep2"), "_counts.txt")))
 
 ```
 
