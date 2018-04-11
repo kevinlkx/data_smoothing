@@ -82,7 +82,7 @@ bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.b
 
 ```
 
-## read read counts
+## get read counts
 ```{r}
 
 extract_counts <- function(filename){
