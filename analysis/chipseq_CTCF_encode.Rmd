@@ -37,14 +37,14 @@ cd /project/mstephens/data_smoothing/chipseq/log
 mkdir /project/mstephens/data_smoothing/chipseq/bw
 
 ## CTCF HelaS3 Broad ChIP-seq
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
 
 ## CTCF HelaS3 UTA ChIP-seq
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
 
 ```
 
