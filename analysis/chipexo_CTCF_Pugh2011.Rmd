@@ -145,7 +145,7 @@ counts_rep3_reverse.l <- extract_counts(file.path(dir_examples, "example_CTCF_ra
 title <- paste0(counts_rep1_forward.l$chr, ": ", counts_rep1_forward.l$start, "-",counts_rep1_forward.l$end)
 
 par(mfcol = c(6,1))
-par(mar = c(2,2,2,1))
+par(mar = c(2,4,2,1))
 par(bty="n")
 plot(counts_rep1_forward.l$counts, main = title, type = "h", col = "blue", ylab = "rep1 forward", xlab = "", ylim = c(0,20))
 plot(counts_rep2_forward.l$counts, type = "h", col = "blue", ylab = "rep2 forward", xlab = "", ylim = c(0,20))
