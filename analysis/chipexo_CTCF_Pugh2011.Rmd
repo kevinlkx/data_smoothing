@@ -109,7 +109,7 @@ bwtool extract bed ${dir_examples}/example_CTCF_MACE.bed ${dir_bw}/CTCF_rep3_rev
 ```
 
 
-## read read counts
+## get read counts
 ```{r}
 
 extract_counts <- function(filename){
