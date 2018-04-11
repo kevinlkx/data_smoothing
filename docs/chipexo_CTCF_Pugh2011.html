@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> 7b6df27</p>
+<p><strong>Code version:</strong> aff78b8</p>
 <!-- Add your analysis here -->
 <div id="the-following-data-download-and-alignment-were-obtained-from-mace" class="section level2">
 <h2>The following data download and alignment were obtained from <a href="http://chipexo.sourceforge.net">MACE</a></h2>
@@ -438,7 +438,7 @@ counts_rep3_reverse.l &lt;- extract_counts(file.path(dir_examples, &quot;example
 <pre class="r"><code>title &lt;- paste0(counts_rep1_forward.l$chr, &quot;: &quot;, counts_rep1_forward.l$start, &quot;-&quot;,counts_rep1_forward.l$end)
 
 par(mfcol = c(6,1))
-par(mar = c(2,2,2,1))
+par(mar = c(2,4,2,1))
 par(bty=&quot;n&quot;)
 plot(counts_rep1_forward.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep1 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
 plot(counts_rep2_forward.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep2 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
