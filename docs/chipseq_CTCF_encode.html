@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> 3fc8ce0</p>
+<p><strong>Code version:</strong> 8882388</p>
 <!-- Add your analysis here -->
 <div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
 <h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
@@ -381,8 +381,8 @@ bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.b
 bwtool extract bed /project/mstephens/data_smoothing/regions/example_CTCF_MACE.bed ${dir_bw}/wgEncodeOpenChromChipHelas3CtcfAlnRep2_reverse.bw ${dir_examples}/example_CTCF_MACE_wgEncodeOpenChromChipHelas3CtcfAlnRep2_reverse_counts.txt
 </code></pre>
 </div>
-<div id="read-read-counts" class="section level2">
-<h2>read read counts</h2>
+<div id="get-read-counts" class="section level2">
+<h2>get read counts</h2>
 <pre class="r"><code>extract_counts &lt;- function(filename){
   bed_counts &lt;- read.table(filename, header = F, stringsAsFactors = F)
   colnames(bed_counts) &lt;- c(&quot;chr&quot;, &quot;start&quot;, &quot;end&quot;, &quot;name&quot;, &quot;width&quot;, &quot;counts&quot;)
