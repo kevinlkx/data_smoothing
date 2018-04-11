@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> bf0a0b2</p>
+<p><strong>Code version:</strong> 5215a0b</p>
 <!-- Add your analysis here -->
 <div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
 <h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
@@ -339,14 +339,14 @@ cd /project/mstephens/data_smoothing/chipseq/log
 mkdir /project/mstephens/data_smoothing/chipseq/bw
 
 ## CTCF HelaS3 Broad ChIP-seq
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep1
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeBroadHistoneHelas3CtcfStdAlnRep2
 
 ## CTCF HelaS3 UTA ChIP-seq
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep1.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep1
 
-sbatch ~/projects/smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
+sbatch ~/projects/data_smoothing/data_smoothing_workflow/code/count_5end_coverage_bamToBigwig.sbatch /project/mstephens/data_smoothing/chipseq/bam/wgEncodeOpenChromChipHelas3CtcfAlnRep2.bam /project/mstephens/data_smoothing/chipseq/bw/wgEncodeOpenChromChipHelas3CtcfAlnRep2
 </code></pre>
 </div>
 <div id="extract-counts-from-bigwig-files" class="section level2">
