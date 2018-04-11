@@ -324,7 +324,7 @@ shared across the workflowr files. -->
 <p><strong>Last updated:</strong> 2018-04-10</p>
 <!-- Insert the code version (Git commit SHA1) if Git repository exists and R
 package git2r is installed -->
-<p><strong>Code version:</strong> 5215a0b</p>
+<p><strong>Code version:</strong> 915a097</p>
 <!-- Add your analysis here -->
 <div id="download-bam-files-from-encode-then-get-5-end-counts-in-bigwig-format" class="section level2">
 <h2>Download BAM files from ENCODE, then get 5’ end counts in bigwig format</h2>
@@ -421,10 +421,10 @@ counts_UTA_rep2_reverse.l &lt;- extract_counts(file.path(dir_examples, &quot;exa
 par(mfcol = c(4,1))
 par(mar = c(2,2,2,1))
 par(bty=&quot;n&quot;)
-plot(counts_broad_rep1_forward.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep1 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
-plot(counts_broad_rep2_forward.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep2 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
-plot(counts_broad_rep1_reverse.l$counts, main = title, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep1 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,20))
-plot(counts_broad_rep2_reverse.l$counts, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep2 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,20))</code></pre>
+plot(counts_broad_rep1_forward.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep1 forward&quot;, xlab = &quot;&quot;, ylim = c(0,10))
+plot(counts_broad_rep2_forward.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep2 forward&quot;, xlab = &quot;&quot;, ylim = c(0,10))
+plot(counts_broad_rep1_reverse.l$counts, main = title, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep1 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,10))
+plot(counts_broad_rep2_reverse.l$counts, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep2 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,10))</code></pre>
 <p><img src="figure/chipseq_CTCF_encode.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <div id="plot-ctcf-hela-chip-seq-read-counts-ut-a" class="section level2">
@@ -434,10 +434,10 @@ plot(counts_broad_rep2_reverse.l$counts, type = &quot;h&quot;, col = &quot;red&q
 par(mfcol = c(4,1))
 par(mar = c(2,2,2,1))
 par(bty=&quot;n&quot;)
-plot(counts_UTA_rep1_forward.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep1 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
-plot(counts_UTA_rep2_forward.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep2 forward&quot;, xlab = &quot;&quot;, ylim = c(0,20))
-plot(counts_UTA_rep1_reverse.l$counts, main = title, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep1 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,20))
-plot(counts_UTA_rep2_reverse.l$counts, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep2 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,20))</code></pre>
+plot(counts_UTA_rep1_forward.l$counts, main = title, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep1 forward&quot;, xlab = &quot;&quot;, ylim = c(0,10))
+plot(counts_UTA_rep2_forward.l$counts, type = &quot;h&quot;, col = &quot;blue&quot;, ylab = &quot;rep2 forward&quot;, xlab = &quot;&quot;, ylim = c(0,10))
+plot(counts_UTA_rep1_reverse.l$counts, main = title, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep1 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,10))
+plot(counts_UTA_rep2_reverse.l$counts, type = &quot;h&quot;, col = &quot;red&quot;, ylab = &quot;rep2 reverse&quot;, xlab = &quot;&quot;, ylim = c(0,10))</code></pre>
 <p><img src="figure/chipseq_CTCF_encode.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /> ## Session information</p>
 <!-- Insert the session information into the document -->
 <pre class="r"><code>sessionInfo()</code></pre>
